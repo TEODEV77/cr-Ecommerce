@@ -2,7 +2,8 @@ export const environment = {
 
     api: {
         port: process.env.DEV_PORT || 7071,
-        host: process.env.LOCALHOST || 'http://127.0.0.1'
+        host: process.env.LOCALHOST || 'http://127.0.0.1',
+        env: process.env.ENVIRONMENT
     },
     mongo: {
         databaseName: process.env.DATABASE_NAME,
