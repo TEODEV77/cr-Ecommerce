@@ -9,6 +9,6 @@ const { port } = environment.api;
 const PORT = process.env.PORT || port;
 const httpServer = http.createServer(app);
 
-httpServer.listen(port, () => {
-  ServerRunning(port);
+httpServer.listen(PORT, () => {
+  ServerRunning(PORT);
 });
