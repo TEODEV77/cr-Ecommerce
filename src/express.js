@@ -20,8 +20,12 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "handlebars");
 
-app.use((req, res, next) => {
+app.get("/", (req, res) => {
   res.render("welcome");
+});
+
+app.use((req, res, next) => {
+  
 });
 
 export default app;
