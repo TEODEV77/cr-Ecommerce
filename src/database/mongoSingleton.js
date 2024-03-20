@@ -8,7 +8,8 @@ export default class MongoSingleton {
 
   constructor() {
     const { URI } = environment.mongo;
-    const MONGO_URI = URI;
+    
+    const MONGO_URI = process.env.MONGO_URI || URI;
 
     try {
         this.connection = mongoose.connect(MONGO_URI);
