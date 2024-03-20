@@ -2,11 +2,12 @@ import http from "http";
 
 import app from "./express.js";
 import { environment } from "./env.js";
+import { ServerRunning } from "./utils/messages.js";
 
-const { port, host } = environment.api;
+const { port } = environment.api;
 
 const httpServer = http.createServer(app);
 
 httpServer.listen(port, () => {
-  console.log(`Server is running at ${host}:${port}`);
+  ServerRunning(port);
 });
