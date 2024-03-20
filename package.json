@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Backend Ecommerce",
   "type": "module",
-  "main": "src/express.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "prod":"node --env-file .env .",
