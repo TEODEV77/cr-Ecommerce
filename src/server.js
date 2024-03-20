@@ -5,8 +5,9 @@ import { environment } from "./env.js";
 
 const { port } = environment.api;
 
+const PORT = process.env.PORT || port;
 const httpServer = http.createServer(app);
 
-httpServer.listen(port, () => {
-  console.log(`Server is running on$ ${port}`);
+httpServer.listen(PORT, () => {
+  console.log(`Server is running on ${port}`);
 });
