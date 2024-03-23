@@ -28,7 +28,7 @@ export default class AuthController {
       //res.cookie("token", token, cookieOptions);
       return res.status(200).json({ token });
     } catch (error) {
-      return res.status(400).json({ message: "User or password invalid" });
+      return res.status(400).json({ message: "User or password invalid", error});
     }
   };
 }
