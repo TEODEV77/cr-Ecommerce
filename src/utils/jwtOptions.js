@@ -1,3 +1,4 @@
+import { ExtractJwt } from "passport-jwt";
 import { environment } from '../env.js';
 
 const SECRET_JWT = process.env.SECRET_JWT || environment.jwt.secret;
