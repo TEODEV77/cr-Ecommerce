@@ -21,12 +21,10 @@ export default class AuthService {
       cart: user.cart,
     };
     AnyMessage(checkPassword);
-    
+
     if (checkPassword) {
-      
       const token = JWT.generateToken(userInfo, "authentication", "2h");
-      
-      
+
       const updateUser = {
         active: JWT.generateToken({ userActive: true }, "active", "2d"),
         last_connection: new Date(),
@@ -35,8 +33,8 @@ export default class AuthService {
       await UserDao.updatePartialBy(user._id, { $set: updateUser });
       AnyMessage(token);
       return token;
+    } else {
+      return 0;
     }
-
-    return 0;
   };
 }

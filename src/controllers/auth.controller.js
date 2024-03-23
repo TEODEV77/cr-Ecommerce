@@ -3,6 +3,7 @@ import AuthService from "../services/auth.service.js";
 import UsersService from "../services/users.service.js";
 import { createUser } from "../validations/user.validation.js";
 import { cookieOptions } from "../utils/cookieOptions.js";
+import { AnyMessage } from "../utils/messages.js";
 
 export default class AuthController {
   static register = async (body, res) => {
@@ -24,6 +25,7 @@ export default class AuthController {
     try {
       const user = await UsersService.findBy({ email: body.email });
       const token = await AuthService.login(body.password, user);
+      AnyMessage({ctr: token});
       res.cookie("token", token, cookieOptions);
       return res.status(200).json({ token });
     } catch (error) {
