@@ -17,6 +17,7 @@ const userModel = new mongoose.Schema(
       enum: ["admin", "premium", "user"],
       default: "user",
     },
+    active: { type: String, default: "" },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     documents: { type: [documentItem], default: [] },
