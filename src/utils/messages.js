@@ -17,5 +17,10 @@ export const DatabaseError = (error) => {
 
 export const AnyMessage = (message) => {
   const logger = getLogger();
-  logger.warn(message);
+  logger.info(message);
+}
+
+export const AnyError = (error) => {
+  const logger = getLogger();
+  logger.error(error);
 }
