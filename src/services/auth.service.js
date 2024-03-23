@@ -1,7 +1,7 @@
 import UserDao from "../dao/user.dao.js";
 import { hashPassword, comparePassword } from "../utils/bcrypt.js";
 import JWT from "../utils/jwt.js";
-import { AnyMessage } from "../utils/messages.js";
+
 
 export default class AuthService {
   static register = (body) => {
@@ -20,7 +20,7 @@ export default class AuthService {
       age: user.age,
       cart: user.cart,
     };
-    AnyMessage(checkPassword);
+   
 
     if (checkPassword) {
       const token = JWT.generateToken(userInfo, "authentication", "2h");
@@ -31,7 +31,7 @@ export default class AuthService {
       };
 
       await UserDao.updatePartialBy(user._id, { $set: updateUser });
-      AnyMessage(token);
+      
       return token;
     } else {
       return 0;
