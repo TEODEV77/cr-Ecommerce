@@ -3,7 +3,6 @@ import AuthService from "../services/auth.service.js";
 import UsersService from "../services/users.service.js";
 import { createUser } from "../validations/user.validation.js";
 import { cookieOptions } from "../utils/cookieOptions.js";
-import { AnyError } from "../utils/messages.js";
 
 export default class AuthController {
   static register = async (body, res) => {
@@ -28,7 +27,6 @@ export default class AuthController {
       res.cookie("token", token, cookieOptions);
       res.status(200).json({ token });
     } catch (error) {
-      AnyError(error);
       res.status(400).json({ message: "User or password invalid"});
     }
   };
