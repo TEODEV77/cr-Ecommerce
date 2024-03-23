@@ -1,9 +1,11 @@
 import jwt from 'jsonwebtoken';
-
+import { environment } from '../env.js';
 export default class Jwt {
 
-  static SECRET = process.env.JWT_SECRET;  
-    
+  
+  static jwt_secret = environment.jwt.secret;
+  static SECRET = process.env.JWT_SECRET || this.jwt_secret; 
+  
   static generateToken = (payload,type,expiresIn) => {
     payload.type = type;
     return jwt.sign(payload, this.SECRET, {

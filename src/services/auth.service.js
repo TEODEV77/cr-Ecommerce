@@ -21,7 +21,6 @@ export default class AuthService {
     };
     if (checkPassword) {
       const token = JWT.generateToken(userInfo, "authentication", "2h");
-      
       const updateUser = {
         active: JWT.generateToken({ userActive: true }, "active", "2d"),
         last_connection: new Date(),
