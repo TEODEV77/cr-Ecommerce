@@ -26,10 +26,10 @@ export default class AuthController {
       const user = await UsersService.findBy({ email: body.email });
       const token = await AuthService.login(body.password, user);
       res.cookie("token", token, cookieOptions);
-      return res.status(200).json({ token });
+      res.status(200).json({ token });
     } catch (error) {
       AnyError(error);
-      return res.status(400).json({ message: "User or password invalid", error});
+      res.status(400).json({ message: "User or password invalid"});
     }
   };
 }
