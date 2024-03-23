@@ -1,6 +1,7 @@
 import UserDao from "../dao/user.dao.js";
 import { hashPassword, comparePassword } from "../utils/bcrypt.js";
 import JWT from "../utils/jwt.js";
+import { AnyMessage } from "../utils/messages.js";
 
 export default class AuthService {
   static register = (body) => {
@@ -19,8 +20,11 @@ export default class AuthService {
       age: user.age,
       cart: user.cart,
     };
+    AnyMessage(checkPassword);
     if (checkPassword) {
+      
       const token = JWT.generateToken(userInfo, "authentication", "2h");
+      AnyMessage(token);
       const updateUser = {
         active: JWT.generateToken({ userActive: true }, "active", "2d"),
         last_connection: new Date(),

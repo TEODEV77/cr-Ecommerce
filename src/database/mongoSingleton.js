@@ -10,7 +10,7 @@ export default class MongoSingleton {
     const { URI } = environment.mongo;
     
     const MONGO_URI = process.env.MONGO_URI || URI;
-
+  
     try {
         this.connection = mongoose.connect(MONGO_URI);
         DatabaseConnected();
