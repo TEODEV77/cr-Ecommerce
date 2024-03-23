@@ -25,7 +25,7 @@ export default class AuthController {
     try {
       const user = await UsersService.findBy({ email: body.email });
       const token = await AuthService.login(body.password, user);
-      AnyMessage({ctr: token});
+      AnyMessage(token);
       res.cookie("token", token, cookieOptions);
       return res.status(200).json({ token });
     } catch (error) {
