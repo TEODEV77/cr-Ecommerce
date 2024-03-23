@@ -3,11 +3,15 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import handlebars from 'express-handlebars';
 
+import passport from "passport";
+
 import { environment } from "./env.js";
 
 import { __dirname } from "./path.js";
 
 import apiRoutes from "./routes/api/index.routes.js";
+
+import {InitPassport} from './config/passport.js';
 
 const { secret } = environment.cookie;
 const secretCookie = process.env.COOKIE_SECRET || secret;
@@ -22,6 +26,9 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.engine("handlebars", handlebars.engine());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "handlebars");
+
+InitPassport();
+app.use(passport.initialize());
 
 app.use("/api", apiRoutes);
 
