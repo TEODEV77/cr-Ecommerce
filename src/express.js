@@ -10,11 +10,12 @@ import { __dirname } from "./path.js";
 import apiRoutes from "./routes/api/index.routes.js";
 
 const { secret } = environment.cookie;
+const secretCookie = process.env.COOKIE_SECRET || secret;
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(secret));
+app.use(cookieParser(secretCookie));
 
 app.use(express.static(path.join(__dirname, "../public")));
 
