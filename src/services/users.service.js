@@ -5,8 +5,8 @@ export default class UsersService {
     return UserDao.findBy(query);
   };
 
-  static updatePartialBy = (query) => {
-    return UserDao.updatePartialBy(query);
+  static updatePartialBy = (id,query) => {
+    return UserDao.updatePartialBy(id,query);
   };
 
   static uploadDocuments = async (req) => {
