@@ -1,8 +1,9 @@
 import UserDao from "../dao/user.dao.js";
 
-export default class UserController {
+import UserServices from "../services/users.service.js";
 
-    static uploadDocuments = async (id, documents) => {
-        await UserDao.updatePartialBy(id, { $set: { documents: documents } });
-    }
+export default class UserController {
+  static uploadDocuments = async (req) => {
+    await UserServices.uploadDocuments(req);
+  };
 }

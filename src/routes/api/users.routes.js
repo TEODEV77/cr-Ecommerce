@@ -12,12 +12,8 @@ router.post(
   Authenticate("jwt"),
   uploadFile(),
   (req, res) => {
-    const refs = req.files.map((file) => ({
-      name: file.originalname,
-      reference: `http://127.0.0.1:7071/uploads/${req.params.fileType}/${req.user.id}-${file.originalname}`,
-    }));
-    UserController.uploadDocuments(req.user.id, refs);
-    res.json({ message: "File uploaded successfully", file: refs });
+    UserController.uploadDocuments(req);
+    res.json({ message: "File uploaded successfully"});
   }
 );
 
