@@ -7,17 +7,19 @@ import UserController from "../../controllers/user.controller.js";
 
 const router = Router();
 
+router.patch("/premium/:id", (req, res) => {
+  const { id } = req.params;
+  UserController.upgradeToPremium(id);
+  res.json({ message: "User upgraded to premium" });
+});
+
 router.post(
   "/documents/:fileType",
   Authenticate("jwt"),
   uploadFile(),
   (req, res) => {
-    const refs = req.files.map((file) => ({
-      name: file.originalname,
-      reference: `http://127.0.0.1:7071/uploads/${req.params.fileType}/${req.user.id}-${file.originalname}`,
-    }));
-    UserController.uploadDocuments(req.user.id, refs);
-    res.json({ message: "File uploaded successfully", file: refs });
+    UserController.uploadDocuments(req);
+    res.json({ message: "File uploaded successfully" });
   }
 );
 
