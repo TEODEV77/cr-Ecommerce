@@ -9,8 +9,13 @@ const router = Router();
 
 router.patch("/premium/:id", (req, res) => {
   const { id } = req.params;
-  UserController.upgradeToPremium(id);
-  res.json({ message: "User upgraded to premium" });
+  try {
+    UserController.upgradeToPremium(id);
+    res.status(201).json({ message: "User upgraded to premium" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+  
 });
 
 router.post(
