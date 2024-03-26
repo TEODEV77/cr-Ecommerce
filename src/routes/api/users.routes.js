@@ -7,13 +7,13 @@ import UserController from "../../controllers/user.controller.js";
 
 const router = Router();
 
-router.patch("/premium/:id", (req, res) => {
+router.patch("/premium/:id", (req, res, next) => {
   const { id } = req.params;
   try {
     UserController.upgradeToPremium(id);
     res.status(201).json({ message: "User upgraded to premium" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
   
 });

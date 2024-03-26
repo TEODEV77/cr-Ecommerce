@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
-import handlebars from 'express-handlebars';
+import handlebars from "express-handlebars";
 
 import passport from "passport";
 
@@ -10,8 +10,10 @@ import { environment } from "./env.js";
 import { __dirname } from "./path.js";
 
 import apiRoutes from "./routes/api/index.routes.js";
+import viewRoutes from "./routes/views/index.routes.js";
 
-import {InitPassport} from './config/passport.js';
+import { InitPassport } from "./config/passport.js";
+import { errorHandling } from "./utils/globalErrorHandling.js";
 
 const { secret } = environment.cookie;
 const secretCookie = process.env.COOKIE_SECRET || secret;
@@ -31,13 +33,8 @@ InitPassport();
 app.use(passport.initialize());
 
 app.use("/api", apiRoutes);
+app.use("/", viewRoutes);
 
-app.get("/", (req, res) => {
-  res.render("welcome");
-});
-
-app.use((req, res, next) => {
-  
-});
+app.use(errorHandling);
 
 export default app;
