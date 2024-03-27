@@ -1,6 +1,7 @@
 <div class="container">
-  <h2>Sign in</h2>
-  <article>
+  
+  <article style="margin-top: 5rem;">
+    <h2 style="text-align: center;">Sign in</h2>
     <form action="/auth/sign-in" method="post">
       <label for="email">
         E-mail:
@@ -10,7 +11,9 @@
         Password:
         <input type="password" name="password" id="password" required />
       </label>
+      
       <button type="submit">Sign in</button>
+      <a href="/sign-up" style="display: flex; justify-content: center;" >Sign up</a>
     </form>
   </article>
 </div>
