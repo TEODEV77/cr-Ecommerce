@@ -11,4 +11,8 @@ router.post("/login", (req, res) => {
   AuthController.login(req.body, res);
 });
 
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
+});
+
 export default router;
