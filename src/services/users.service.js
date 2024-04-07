@@ -1,12 +1,16 @@
 import UserDao from "../dao/user.dao.js";
 
 export default class UsersService {
+
+
+  static isAdmin = "admin";
+
   static findBy = (query) => {
     return UserDao.findBy(query);
   };
 
-  static updatePartialBy = (id,query) => {
-    return UserDao.updatePartialBy(id,query);
+  static updatePartialBy = (id, query) => {
+    return UserDao.updatePartialBy(id, query);
   };
 
   static uploadDocuments = async (req) => {
@@ -18,5 +22,13 @@ export default class UsersService {
       $push: { documents: { $each: documents } },
     });
   };
-}
 
+  static getUserPremiumOrAdmin(id) {
+    const query = {
+      _id: id,
+      $or: [{ role: "premium" }, { role: "admin" }],
+    };
+
+    return UserDao.findBy(query);
+  }
+}
