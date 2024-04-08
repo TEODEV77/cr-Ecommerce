@@ -13,7 +13,7 @@ export default class productDao {
     return productModel.findByIdAndUpdate(id, query);
   }
 
-  static async deleteBy(id) {
-    return productModel.findByIdAndDelete(id);
+  static async remove(id) {
+    return productModel.deleteOne({ _id: id});
   }
 }
