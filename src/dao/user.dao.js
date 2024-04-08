@@ -12,4 +12,11 @@ export default class UserDao {
   static async updatePartialBy (id,query) {
     return userModel.findByIdAndUpdate(id,query);
   }
+
+  static getUserPremiumOrAdmin(id) {
+    return userModel.findOne({
+      _id: id,
+      $or: [{ role: "premium" }, { role: "admin" }],
+    });
+  }
 }
