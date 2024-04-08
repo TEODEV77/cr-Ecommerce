@@ -37,7 +37,7 @@ router.delete("/:id", Authenticate("jwt"), async (req, res, next) => {
 
   try {
     await ProductController.remove(id , user.id);
-    res.status(201).json({ message: "Product has been deleted" });
+    res.status(204).json({ message: "Product has been deleted" });
   } catch (error) {
     next(error); 
   }
