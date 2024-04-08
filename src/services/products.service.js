@@ -33,4 +33,20 @@ export default class ProductsService {
 
     return productDao.updatePartialBy(pid, payload);
   };
+
+  static remove = async (pid, id) => {
+    const product = await productDao.getBy({ _id: pid });
+
+    if (!product) throw new Error("Product not found");
+
+    const user = await UsersService.getUserPremiumOrAdmin(id);
+
+    if (!user) throw new Error("You must be a admin or premium user to delete products"); 
+
+    if(user.role === UsersService.isAdmin) return productDao.remove(pid);
+
+    if(product.owner !== user.email) throw new Error("You must be the owner of the product to delete it");
+
+    return productDao.remove(pid);
+  };
 }

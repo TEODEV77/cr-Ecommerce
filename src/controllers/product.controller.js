@@ -11,4 +11,8 @@ export default class ProductController {
         return await productsService.updatePartial(pid, payload, id);
     }
 
+    static remove = async (pid, id) => {
+        return await productsService.remove(pid, id);
+    }
+
 }
