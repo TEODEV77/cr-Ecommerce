@@ -1,12 +1,15 @@
 import UserDao from "../dao/user.dao.js";
 import { hashPassword, comparePassword } from "../utils/bcrypt.js";
 import JWT from "../utils/jwt.js";
+import CartsService from "./carts.service.js";
 
 
 export default class AuthService {
-  static register = (body) => {
+  static register = async (body) => {
     body.password = hashPassword(body.password);
     body.active = JWT.generateToken({ userActive: true }, "active", "2d");
+    const cart = await CartsService.create();
+    body.cart = cart._id;
     return UserDao.create(body);
   };
 
