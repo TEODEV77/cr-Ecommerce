@@ -12,7 +12,7 @@ export default class UserController {
     const userDocs = user.documents;
     const filteredDocs = userDocs.filter(doc => doc.reference.includes(`/documents`));
     
-    if(filteredDocs.length < 4) throw new Error("You must upload all documents");
+    if(filteredDocs.length < 3) throw new Error("You must upload all documents");
 
     await UserServices.updatePartialBy(id, { $set: { role: 'premium' } });  
 

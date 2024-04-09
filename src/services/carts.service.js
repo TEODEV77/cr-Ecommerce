@@ -1,4 +1,5 @@
 import CartDao from "../dao/cart.dao.js";
+import ProductsService from "./products.service.js";
 
 export default class CartsService {
   static create() {
@@ -11,7 +12,12 @@ export default class CartsService {
     return CartDao.getById(query);
   }
 
-  static addItemToCart = async (cid, pid, quantity) => {
+  static addItemToCart = async (cid, pid, quantity, owner) => {
+    const productOwner = await ProductsService.getBy({ _id: pid });
+
+    if (productOwner.owner === owner)
+      throw new Error("You can't add your own product to the cart");
+
     const cart = await CartDao.productIsIn(cid, pid);
     if (cart) {
       const query = { _id: cid, "products.product": pid };
