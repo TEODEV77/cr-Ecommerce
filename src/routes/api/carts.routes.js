@@ -24,6 +24,17 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/:cid/products/:pid", async (req, res, next) => {
+  const cid = req.params.cid;
+  const pid = req.params.pid;
+  try {
+    await CartController.removeItem(cid,pid);
+    res.status(201).json({ message: "Cart item deleted" });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/:id", async (req, res, next) => {
   const id = req.params.id;
   try {

@@ -24,10 +24,16 @@ export default class CartsService {
       $push: { products: { product: pid, quantity: quantity } },
     };
 
-    return await CartDao.addItemToCart(query, operation);
+    return await CartDao.update(query, operation);
   };
 
   static updateQuantity = async (query, operation) => {
-    return await CartDao.updateQuantity(query, operation);
+    return await CartDao.update(query, operation);
   };
+
+  static deleteItemToCart = async (cid,pid) => {
+    const query = { _id: cid, "products.product": pid };
+    const operation = { $pull: { products: { product: pid } } };
+    return await CartDao.update(query, operation);
+  }
 }

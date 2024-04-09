@@ -9,15 +9,11 @@ export default class cartDao {
     return cartModel.findOne(query);
   }
 
-  static addItemToCart = async (query, operation) => {
-    return await cartModel.findOneAndUpdate(query, operation);
-  };
+  static update(query, operation) {
+    return cartModel.findOneAndUpdate(query, operation);
+  }
 
-  static updateQuantity = async (query, operation) => {
-    return await cartModel.findOneAndUpdate(query, operation);
-  };
-
-  static productIsIn (cid,pid) {
+  static productIsIn(cid, pid) {
     return cartModel.findOne({ _id: cid, "products.product": pid });
   }
 }
