@@ -31,9 +31,15 @@ export default class CartsService {
     return await CartDao.update(query, operation);
   };
 
-  static deleteItemToCart = async (cid,pid) => {
+  static deleteItemToCart = async (cid, pid) => {
     const query = { _id: cid, "products.product": pid };
     const operation = { $pull: { products: { product: pid } } };
     return await CartDao.update(query, operation);
-  }
+  };
+
+  static deleteItemsToCart = async (cid) => {
+    const query = { _id: cid };
+    const operation = { $set: { products: [] } };
+    return await CartDao.update(query, operation);
+  };
 }

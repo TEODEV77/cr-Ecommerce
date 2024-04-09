@@ -35,6 +35,16 @@ router.delete("/:cid/products/:pid", async (req, res, next) => {
   }
 });
 
+router.delete("/:cid/products", async (req, res, next) => {
+  const cid = req.params.cid;
+  try {
+    await CartController.removeItems(cid);
+    res.status(201).json({ message: "Cart items deleted" });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/:id", async (req, res, next) => {
   const id = req.params.id;
   try {
