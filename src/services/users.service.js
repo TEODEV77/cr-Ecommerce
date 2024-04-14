@@ -1,6 +1,7 @@
 import UserDao from "../dao/user.dao.js";
 import CartsService from "./carts.service.js";
 import ProductsService from "./products.service.js";
+import TicketsService from "./tickets.service.js";
 
 export default class UsersService {
 
@@ -51,6 +52,7 @@ export default class UsersService {
       return acc + amount;
     }, 0);
 
+    await TicketsService.create(totalAmount,user.email);
     
     return details;
 
