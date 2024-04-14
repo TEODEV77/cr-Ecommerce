@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { Authenticate } from "../../config/middleware/passport.mid.js";
 import CartController from "../../controllers/carts.controller.js";
+import UserController from "../../controllers/user.controller.js";
 
 const router = Router();
 
@@ -14,6 +15,15 @@ router.post("/:cid/products/:pid", Authenticate('jwt'), async (req, res, next) =
   try {
     await CartController.addItemToCart(cid, pid, quantity, owner);
     res.json({ message: "Product added to cart" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/:cid/purchase", Authenticate('jwt'), async (req, res, next) => {
+  try {
+    const details = await UserController.purchase(req.user);
+    res.status(201).json(details);
   } catch (error) {
     next(error);
   }
@@ -33,7 +43,7 @@ router.delete("/:cid/products/:pid", async (req, res, next) => {
   const pid = req.params.pid;
   try {
     await CartController.removeItem(cid,pid);
-    res.status(201).json({ message: "Cart item deleted" });
+    res.status(200).json({ message: "Cart item deleted" });
   } catch (error) {
     next(error);
   }
@@ -43,7 +53,17 @@ router.delete("/:cid/products", async (req, res, next) => {
   const cid = req.params.cid;
   try {
     await CartController.removeItems(cid);
-    res.status(201).json({ message: "Cart items deleted" });
+    res.status(200).json({ message: "Cart items deleted" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:cid", async (req, res, next) => {
+  const cid = req.params.cid;
+  try {
+    await CartController.remove(cid);
+    res.status(200).json({ message: "Cart has been deleted" });
   } catch (error) {
     next(error);
   }

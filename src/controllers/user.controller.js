@@ -17,4 +17,8 @@ export default class UserController {
     await UserServices.updatePartialBy(id, { $set: { role: 'premium' } });  
 
   }
+
+  static purchase (user) {
+    return UserServices.purchase(user);
+  }
 }

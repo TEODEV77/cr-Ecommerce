@@ -12,7 +12,17 @@ export default class CartsService {
     return CartDao.getById(query);
   }
 
+  static populate = async (cid) => {
+    const cart = await CartDao.populate({ _id: cid });
+    if (!cart) throw new Error("Cart not found");
+    return cart.products.toObject();
+  };
+
   static addItemToCart = async (cid, pid, quantity, owner) => {
+    const shoppingCart = await this.getById(cid);
+
+    if (!shoppingCart) throw new Error("Cart not found");
+
     const productOwner = await ProductsService.getBy({ _id: pid });
 
     if (productOwner.owner === owner)
@@ -47,5 +57,11 @@ export default class CartsService {
     const query = { _id: cid };
     const operation = { $set: { products: [] } };
     return await CartDao.update(query, operation);
+  };
+
+  static removeCart = async (cid) => {
+    const cart = await this.getById(cid);
+    if (!cart) throw new Error("Cart not found");
+    return await CartDao.remove(query);
   };
 }
