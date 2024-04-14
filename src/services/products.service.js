@@ -24,7 +24,7 @@ export default class ProductsService {
     if (!product) throw new Error("Product not found");
 
     const user = await UsersService.getUserPremiumOrAdmin(id);
-
+    `You must ${user}`
     if (!user) throw new Error("You must be a admin or premium user to update products"); 
 
     if(user.role === UsersService.isAdmin) return productDao.updatePartialBy(pid, payload);
@@ -49,4 +49,23 @@ export default class ProductsService {
 
     return productDao.remove(pid);
   };
+
+  static productsInStock (cart) {
+    const inStock = cart.filter((item) => item.quantity <= item.product.stock); 
+    return inStock;
+  }
+
+  static productsOutOfStock (cart) {
+    const inStock = cart.filter((item) => item.quantity > item.product.stock); 
+    return inStock;
+  }
+
+  static updateQuantity = async (products) => {
+    for (let product of products) {
+      const query = { _id: product.product._id.toString() };
+      const operation = { $inc: { stock: -product.quantity } };
+      await productDao.updatePartialBy(query, operation);
+    }
+  };
+  
 }

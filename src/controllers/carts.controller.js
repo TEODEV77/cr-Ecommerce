@@ -10,11 +10,19 @@ export default class CartController {
         return await cartsService.getById(id);
     }
 
-    static addItemToCart = async (cid,pid,quantity) => {
-        return await cartsService.addItemToCart(cid,pid,quantity);
+    static addItemToCart = async (cid,pid,quantity,owner) => {
+        return await cartsService.addItemToCart(cid,pid,quantity,owner);
     }
 
     static removeItem = async (cid,pid) => {
         return await cartsService.deleteItemToCart(cid,pid);
+    }
+
+    static removeItems = async (cid) => {
+        return await cartsService.deleteItemsToCart(cid);
+    }
+
+    static remove = async (cid) => {
+        return await cartsService.removeCart(cid);
     }
 }

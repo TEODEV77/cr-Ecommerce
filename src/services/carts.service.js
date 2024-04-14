@@ -1,4 +1,5 @@
 import CartDao from "../dao/cart.dao.js";
+import ProductsService from "./products.service.js";
 
 export default class CartsService {
   static create() {
@@ -11,7 +12,22 @@ export default class CartsService {
     return CartDao.getById(query);
   }
 
-  static addItemToCart = async (cid, pid, quantity) => {
+  static populate = async (cid) => {
+    const cart = await CartDao.populate({ _id: cid });
+    if (!cart) throw new Error("Cart not found");
+    return cart.products.toObject();
+  };
+
+  static addItemToCart = async (cid, pid, quantity, owner) => {
+    const shoppingCart = await this.getById(cid);
+
+    if (!shoppingCart) throw new Error("Cart not found");
+
+    const productOwner = await ProductsService.getBy({ _id: pid });
+
+    if (productOwner.owner === owner)
+      throw new Error("You can't add your own product to the cart");
+
     const cart = await CartDao.productIsIn(cid, pid);
     if (cart) {
       const query = { _id: cid, "products.product": pid };
@@ -31,9 +47,21 @@ export default class CartsService {
     return await CartDao.update(query, operation);
   };
 
-  static deleteItemToCart = async (cid,pid) => {
+  static deleteItemToCart = async (cid, pid) => {
     const query = { _id: cid, "products.product": pid };
     const operation = { $pull: { products: { product: pid } } };
     return await CartDao.update(query, operation);
-  }
+  };
+
+  static deleteItemsToCart = async (cid) => {
+    const query = { _id: cid };
+    const operation = { $set: { products: [] } };
+    return await CartDao.update(query, operation);
+  };
+
+  static removeCart = async (cid) => {
+    const cart = await this.getById(cid);
+    if (!cart) throw new Error("Cart not found");
+    return await CartDao.remove(query);
+  };
 }
