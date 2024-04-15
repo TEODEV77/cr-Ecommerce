@@ -1,7 +1,9 @@
 import UserDao from "../dao/user.dao.js";
 import UserDto from "../dto/user.dto.js";
 import Jwt from "../utils/jwt.js";
+import { inactivityEmail } from "../utils/mailMessages.js";
 import CartsService from "./carts.service.js";
+import MailService from "./mail.service.js";
 import ProductsService from "./products.service.js";
 import TicketsService from "./tickets.service.js";
 
@@ -25,19 +27,25 @@ export default class UsersService {
       try {
         Jwt.verifyToken(user.active);
       } catch (error) {
-        inactiveUsers.push(user.email);
+        const user = { name: user.firstName, email: user.email };
+        inactiveUsers.push(user);
       }
     }
   };
 
   static deleteInactiveUsers = async () => {
-    const emails = this.getInactiveUsers();
+    // Manual test, for the manual test, create the user in the db
+    //const users = [{ name: 'User name', email: 'user email'}];
+    const users = this.getInactiveUsers();
+    const mailService = MailService.getInstance();
 
-    if (!emails.length) throw new Error("No users to delete");
+    if (!users.length) throw new Error("No users to delete");
 
-    for (let email of emails) {
-      const query = { email: email };
+    for (let user of users) {
+      const query = { email: user.email };
       await UserDao.deleteBy(query);
+      const body = inactivityEmail(user.name);
+      mailService.sendEmail(user.email, "Inactivity", body, []);
     }
 
     return "Users deleted successfully";
