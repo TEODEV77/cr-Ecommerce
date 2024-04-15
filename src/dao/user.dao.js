@@ -5,12 +5,20 @@ export default class UserDao {
     return userModel.create(payload);
   }
 
+  static getAll() {
+    return userModel.find();
+  }
+
   static findBy(query) {
     return userModel.findOne(query);
   }
 
   static async updatePartialBy (id,query) {
     return userModel.findByIdAndUpdate(id,query);
+  }
+
+  static async deleteBy (query) {
+    return userModel.deleteOne(query);
   }
 
   static getUserPremiumOrAdmin(id) {

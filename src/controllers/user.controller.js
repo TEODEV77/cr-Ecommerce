@@ -1,6 +1,16 @@
 import UserServices from "../services/users.service.js";
 
 export default class UserController {
+
+
+  static get () {
+    return UserServices.get();
+  }
+
+  static deleteInactiveUsers () {
+    return UserServices.deleteInactiveUsers();
+  }
+
   static uploadDocuments = async (req) => {
     await UserServices.uploadDocuments(req);
   };
